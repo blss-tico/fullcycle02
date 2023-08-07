@@ -1,1 +1,10 @@
+# Author: blss-tico (github.com/blss-tico)
+
+FROM mysql:latest
+
+ENV MYSQL_ROOT_PASSWORD=fullcycledb
+
+COPY ./setup.sql /tmp
+
+CMD ["mysqld", "--init-file=/tmp/setup.sql"]
 
