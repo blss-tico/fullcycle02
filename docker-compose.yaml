@@ -1,0 +1,58 @@
+# Author: blss-tico (github.com/blss-tico)
+
+version: '3.8'
+
+services:
+
+    # mysql database container
+    db:
+        image: blsstico/mysql_fc
+        container_name: fc_mysql
+        command: --default-authentication-plugin=mysql_native_password
+        restart: always
+        tty: true
+        volumes:
+            - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql
+            - ./mysql/data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: fullcycledb
+        networks:
+            - fc_net
+
+    # nodejs application container
+    node:
+        #build:
+        #    context: ./node
+        #    dockerfile: Dockerfile.prod
+        image: blsstico/node_fc
+        container_name: fc_node
+        tty: true
+        entrypoint: /bin/wait-for db:3306 -t 120 -- ./start.sh
+        volumes:
+            - ./node:/usr/app
+        ports:
+            - 3000:3000
+        networks:
+            - fc_net
+        depends_on:
+            - db
+
+    # nginx reverse proxy container
+    nginx:
+        #build:
+        #    context: ./nginx
+        #    dockerfile: Dockerfile.prod
+        image: blsstico/nginx_fc
+        container_name: fc_nginx
+        ports:
+            - 80:80
+        networks:
+            - fc_net
+        depends_on:
+            - db
+            - node
+
+# network definition
+networks:
+    fc_net:
+        driver: bridge
