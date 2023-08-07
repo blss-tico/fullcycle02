@@ -21,9 +21,6 @@ services:
 
     # nodejs application container
     node:
-        #build:
-        #    context: ./node
-        #    dockerfile: Dockerfile.prod
         image: blsstico/node_fc
         container_name: fc_node
         tty: true
@@ -39,9 +36,6 @@ services:
 
     # nginx reverse proxy container
     nginx:
-        #build:
-        #    context: ./nginx
-        #    dockerfile: Dockerfile.prod
         image: blsstico/nginx_fc
         container_name: fc_nginx
         ports:
