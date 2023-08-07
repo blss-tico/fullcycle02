@@ -1,0 +1,27 @@
+# Author: blss-tico (github.com/blss-tico)
+
+# nodejs application with pm2
+FROM node:18-alpine
+
+RUN apk update && \
+    apk add netcat-openbsd && \
+    wget -q -O /bin/wait-for https://raw.githubusercontent.com/eficode/wait-for/v2.2.3/wait-for && \
+    chmod +x /bin/wait-for
+    
+WORKDIR /usr/app
+
+COPY . .
+
+RUN npm i fastify @fastify/mysql 
+
+RUN npm i pino-pretty -D
+
+RUN npm i pm2
+
+EXPOSE 3000
+
+RUN chmod +x start.sh
+
+#ENTRYPOINT ["/bin/wait-for", "fc_mysql:3306 -t 120 -- start.sh"] 
+
+CMD ["./node_modules/pm2/bin/pm2-runtime", "server.js"]
