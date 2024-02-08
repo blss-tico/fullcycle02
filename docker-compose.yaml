@@ -21,10 +21,10 @@ services:
 
     # nodejs application container
     node:
-        image: blsstico/node_fc
+        image: blsstico/node_fc:2.0
         container_name: fc_node
         tty: true
-        entrypoint: /bin/wait-for db:3306 -t 120 -- ./start.sh
+        entrypoint: /bin/wait-for db:3306 -t 120 -- node server.js
         volumes:
             - ./node:/usr/app
         ports:
