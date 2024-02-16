@@ -1,12 +1,7 @@
 'use strict'
 
 const server = require('./src/app')({
-  logger: {
-    level: 'info',
-    transport: {
-      target: 'pino-pretty'	
-    }
-  }
+  logger: true
 })
 
 server.listen({ port: 3000, host: '0.0.0.0' }, (err, address) => {
