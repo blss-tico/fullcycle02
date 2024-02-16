@@ -24,7 +24,7 @@ services:
         image: blsstico/node_fc:3.0
         container_name: fc_node
         tty: true
-        entrypoint: /bin/wait-for db:3306 -t 120 -- node /usr/app/server.js
+        entrypoint: /bin/wait-for db:3306 -t 120 -- npm i && node /usr/app/server.js
         volumes:
             - ./node:/usr/app
         ports:
