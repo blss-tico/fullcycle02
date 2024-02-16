@@ -1,24 +1,34 @@
 # Author: blss-tico (github.com/blss-tico)
-
 # nodejs application
+
+# set image for project
 FROM node:21-alpine
 
+# install wait-for to wait for database
 RUN apk update && \
     apk add netcat-openbsd && \
     wget -q -O /bin/wait-for https://raw.githubusercontent.com/eficode/wait-for/v2.2.3/wait-for && \
     chmod +x /bin/wait-for
     
-WORKDIR /usr/app
+# set workdir inside container
+WORKDIR /app
 
-COPY . .
+# set environment variable for node
+ENV NODE_ENV production
 
-#RUN npm install
-#RUN npm install fastify --save
-#RUN npm install @fastify/mysql --save
-#RUN npm install pino-pretty -D
+# copy package.json project
+COPY package.json /app
 
+# install packages with npm
+RUN npm install
+
+# copy project files to container
+COPY . /app
+
+# set port to application
 EXPOSE 3000
 
+# run application
 CMD ["node", "server.js"]
 
 # code deprecated, no pm2 used anymore
