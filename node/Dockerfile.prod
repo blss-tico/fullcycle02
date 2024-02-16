@@ -12,15 +12,14 @@ WORKDIR /usr/app
 
 COPY . .
 
-#RUN npm i fastify @fastify/mysql 
+RUN npm install fastify --save
 
-#RUN npm i pino-pretty -D
+RUN npm install @fastify/mysql --save
+
+RUN npm install pino-pretty -D
 
 EXPOSE 3000
 
-CMD ["npm", "i", "fastify"]
-CMD ["npm", "i", "@fastify/mysql"]
-CMD ["npm", "i", "pino-pretty", "-D"]
 CMD ["node", "server.js"]
 
 # code deprecated, no pm2 used anymore
