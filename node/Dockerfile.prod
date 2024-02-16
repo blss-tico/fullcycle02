@@ -12,11 +12,11 @@ WORKDIR /usr/app
 
 COPY . .
 
-RUN npm install fastify --save
+RUN npm install
 
-RUN npm install @fastify/mysql --save
-
-RUN npm install pino-pretty -D
+#RUN npm install fastify --save
+#RUN npm install @fastify/mysql --save
+#RUN npm install pino-pretty -D
 
 EXPOSE 3000
 
