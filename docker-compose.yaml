@@ -22,9 +22,12 @@ services:
     # nodejs application container
     node:
         image: blsstico/node_fc:4.0
+        build:
+            context: ./node
+            dockerfile: Dockerfile.prod
         container_name: fc_node
         tty: true
-        entrypoint: /bin/wait-for db:3306 -t 120 -- node server.js
+        entrypoint: /bin/wait-for db:3306 -t 120 -- sh -c "npm install && node server.js"
         volumes:
             - ./node:/usr/app
         ports:
