@@ -9,21 +9,24 @@ RUN apk update && \
     apk add netcat-openbsd && \
     wget -q -O /bin/wait-for https://raw.githubusercontent.com/eficode/wait-for/v2.2.3/wait-for && \
     chmod +x /bin/wait-for
-    
-# set workdir inside container
-WORKDIR /app
 
 # set environment variable for node
 ENV NODE_ENV production
 
 # copy package.json project
-COPY package.json /app
+# COPY package.json /app
 
 # install packages with npm
-RUN npm install
+# RUN npm install
 
 # copy project files to container
-COPY . /app
+# COPY . /app
+
+# set user
+USER node
+
+# set workdir inside container
+WORKDIR /app
 
 # set port to application
 EXPOSE 3000
